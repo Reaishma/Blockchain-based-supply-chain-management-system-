@@ -1,0 +1,1149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain-Based Supply Chain Management Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .blockchain-indicator {
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            box-shadow: 0 4px 15px rgba(0,255,136,0.3);
+            animation: blockchainPulse 2s infinite;
+        }
+
+        @keyframes blockchainPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #00ff88, #00ccff, #3498db, #2ecc71);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            background: #ecf0f1;
+            border: none;
+            font-weight: 600;
+            color: #7f8c8d;
+            transition: all 0.3s ease;
+            border-radius: 8px 8px 0 0;
+            margin-right: 5px;
+        }
+
+        .tab.active {
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            color: white;
+            box-shadow: 0 -2px 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .input-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-field label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .input-field input, .input-field select {
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        .input-field input:focus, .input-field select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+            color: white;
+        }
+
+        .output-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #2ecc71;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #27ae60;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .inventory-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+        }
+
+        .inventory-item.warning {
+            border-left-color: #f39c12;
+        }
+
+        .inventory-item.critical {
+            border-left-color: #e74c3c;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-good {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-critical {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .secure-storage-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #00ff88, #00ccff);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 20px rgba(0,255,136,0.3);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔗 Blockchain-Based Supply Chain Management Dashboard</h1>
+            <p>Advanced real-time monitoring with blockchain security and immutable data storage</p>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Blockchain Demand Forecasting -->
+            <div class="card">
+                <div class="blockchain-indicator">BLOCKCHAIN SECURED</div>
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #3498db, #2ecc71);">📈</div>
+                    <div class="card-title">Blockchain Demand Forecasting</div>
+                </div>
+                
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('demand', 'input')">Input Data</div>
+                    <div class="tab" onclick="switchTab('demand', 'output')">Results</div>
+                </div>
+
+                <div id="demand-input" class="tab-content active">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label>Historical Sales (Last 12 months)</label>
+                                <input type="text" id="historical-sales" placeholder="e.g., 1000,1200,1100,1300..." value="1000,1200,1100,1300,1250,1400,1350,1500,1450,1600,1550,1700">
+                            </div>
+                            <div class="input-field">
+                                <label>Seasonal Factor</label>
+                                <input type="number" id="seasonal-factor" step="0.01" value="1.15">
+                            </div>
+                            <div class="input-field">
+                                <label>Market Growth Rate (%)</label>
+                                <input type="number" id="growth-rate" step="0.1" value="5.2">
+                            </div>
+                            <div class="input-field">
+                                <label>Forecast Method</label>
+                                <select id="forecast-method">
+                                    <option value="linear">Linear Regression</option>
+                                    <option value="exponential">Exponential Smoothing</option>
+                                    <option value="seasonal">Seasonal Decomposition</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateDemandForecast()">Calculate Blockchain Forecast</button>
+                    </div>
+                </div>
+
+                <div id="demand-output" class="tab-content">
+                    <div class="output-section">
+                        <div class="metric">
+                            <span class="metric-label">Forecast Accuracy</span>
+                            <span class="metric-value" id="forecast-accuracy">0%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Next Month Demand</span>
+                            <span class="metric-value" id="next-month-demand">0 units</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Confidence Interval</span>
+                            <span class="metric-value" id="confidence-interval">±0%</span>
+                        </div>
+                        <div class="alert alert-success">
+                            <strong>Blockchain Status:</strong> <span id="blockchain-forecast-status">Data secured on blockchain</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blockchain Vendor Managed Inventory -->
+            <div class="card">
+                <div class="blockchain-indicator">BLOCKCHAIN SECURED</div>
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">📦</div>
+                    <div class="card-title">Blockchain Vendor Managed Inventory</div>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('vmi', 'input')">Inventory Input</div>
+                    <div class="tab" onclick="switchTab('vmi', 'output')">VMI Dashboard</div>
+                </div>
+
+                <div id="vmi-input" class="tab-content active">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label>Item Name</label>
+                                <input type="text" id="vmi-item-name" placeholder="Enter item name">
+                            </div>
+                            <div class="input-field">
+                                <label>Current Stock</label>
+                                <input type="number" id="vmi-current-stock" value="100">
+                            </div>
+                            <div class="input-field">
+                                <label>Maximum Stock</label>
+                                <input type="number" id="vmi-max-stock" value="200">
+                            </div>
+                            <div class="input-field">
+                                <label>Minimum Stock</label>
+                                <input type="number" id="vmi-min-stock" value="20">
+                            </div>
+                            <div class="input-field">
+                                <label>Reorder Point</label>
+                                <input type="number" id="vmi-reorder-point" value="50">
+                            </div>
+                            <div class="input-field">
+                                <label>Lead Time (days)</label>
+                                <input type="number" id="vmi-lead-time" value="5">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="addInventoryItem()">Add to Blockchain Inventory</button>
+                        <button class="btn btn-secondary" onclick="calculateVMIMetrics()">Calculate VMI Metrics</button>
+                    </div>
+                </div>
+
+                <div id="vmi-output" class="tab-content">
+                    <div class="output-section">
+                        <div class="metric">
+                            <span class="metric-label">VMI Coverage</span>
+                            <span class="metric-value" id="vmi-coverage">0%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Inventory Turnover</span>
+                            <span class="metric-value" id="inventory-turnover">0.0x</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Stock-out Risk</span>
+                            <span class="metric-value" id="stockout-risk">Low</span>
+                        </div>
+                        <div class="inventory-grid" id="inventory-grid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blockchain Just in Time Production -->
+            <div class="card">
+                <div class="blockchain-indicator">BLOCKCHAIN SECURED</div>
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #27ae60, #229954);">⏱️</div>
+                    <div class="card-title">Blockchain Just in Time Production</div>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('jit', 'input')">Production Input</div>
+                    <div class="tab" onclick="switchTab('jit', 'output')">JIT Metrics</div>
+                </div>
+
+                <div id="jit-input" class="tab-content active">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label>Production Capacity (units/day)</label>
+                                <input type="number" id="production-capacity" value="100">
+                            </div>
+                            <div class="input-field">
+                                <label>Actual Production (units/day)</label>
+                                <input type="number" id="actual-production" value="95">
+                            </div>
+                            <div class="input-field">
+                                <label>Orders Delivered On Time</label>
+                                <input type="number" id="ontime-orders" value="90">
+                            </div>
+                            <div class="input-field">
+                                <label>Total Orders</label>
+                                <input type="number" id="total-orders" value="100">
+                            </div>
+                            <div class="input-field">
+                                <label>Average Inventory (units)</label>
+                                <input type="number" id="avg-inventory" value="50">
+                            </div>
+                            <div class="input-field">
+                                <label>Daily Demand (units)</label>
+                                <input type="number" id="daily-demand" value="20">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateJITMetrics()">Calculate JIT Metrics</button>
+                    </div>
+                </div>
+
+                <div id="jit-output" class="tab-content">
+                    <div class="output-section">
+                        <div class="metric">
+                            <span class="metric-label">On-Time Delivery</span>
+                            <span class="metric-value" id="ontime-delivery">0%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Production Efficiency</span>
+                            <span class="metric-value" id="production-efficiency">0%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Inventory Days</span>
+                            <span class="metric-value" id="inventory-days">0 days</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">JIT Performance</span>
+                            <span class="metric-value" id="jit-performance">Calculating...</span>
+                        </div>
+                        <div class="alert alert-success">
+                            <strong>Status:</strong> <span id="jit-status">Blockchain data validation in progress</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blockchain Total Cost of Ownership -->
+            <div class="card">
+                <div class="blockchain-indicator">BLOCKCHAIN SECURED</div>
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #34495e, #2c3e50);">💰</div>
+                    <div class="card-title">Blockchain Total Cost of Ownership</div>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('tco', 'input')">Cost Input</div>
+                    <div class="tab" onclick="switchTab('tco', 'output')">TCO Analysis</div>
+                </div>
+
+                <div id="tco-input" class="tab-content active">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label>Purchase Cost ($)</label>
+                                <input type="number" id="purchase-cost" value="50000">
+                            </div>
+                            <div class="input-field">
+                                <label>Annual Operating Cost ($)</label>
+                                <input type="number" id="operating-cost" value="12000">
+                            </div>
+                            <div class="input-field">
+                                <label>Annual Maintenance Cost ($)</label>
+                                <input type="number" id="maintenance-cost" value="5000">
+                            </div>
+                            <div class="input-field">
+                                <label>Training Cost ($)</label>
+                                <input type="number" id="training-cost" value="3000">
+                            </div>
+                            <div class="input-field">
+                                <label>Disposal Cost ($)</label>
+                                <input type="number" id="disposal-cost" value="2000">
+                            </div>
+                            <div class="input-field">
+                                <label>Asset Lifespan (years)</label>
+                                <input type="number" id="asset-lifespan" value="5">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateTCO()">Calculate Blockchain TCO</button>
+                    </div>
+                </div>
+
+                <div id="tco-output" class="tab-content">
+                    <div class="output-section">
+                        <div class="metric">
+                            <span class="metric-label">Total Cost of Ownership</span>
+                            <span class="metric-value" id="total-tco">$0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Annual TCO</span>
+                            <span class="metric-value" id="annual-tco">$0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Hidden Costs</span>
+                            <span class="metric-value" id="hidden-costs">0%</span>
+                        </div>
+                        <div class="alert alert-success">
+                            <strong>Blockchain Audit:</strong> <span id="tco-blockchain-status">Cost data immutably stored</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blockchain Risk Management -->
+            <div class="card">
+                <div class="blockchain-indicator">BLOCKCHAIN SECURED</div>
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">⚠️</div>
+                    <div class="card-title">Blockchain Risk Management</div>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('risk', 'input')">Risk Assessment</div>
+                    <div class="tab" onclick="switchTab('risk', 'output')">Risk Analysis</div>
+                </div>
+
+                <div id="risk-input" class="tab-content active">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label>Supply Risk Level (1-10)</label>
+                                <input type="number" id="supply-risk" min="1" max="10" value="3">
+                            </div>
+                            <div class="input-field">
+                                <label>Demand Risk Level (1-10)</label>
+                                <input type="number" id="demand-risk" min="1" max="10" value="4">
+                            </div>
+                            <div class="input-field">
+                                <label>Quality Risk Level (1-10)</label>
+                                <input type="number" id="quality-risk" min="1" max="10" value="2">
+                            </div>
+                            <div class="input-field">
+                                <label>Financial Risk Level (1-10)</label>
+                                <input type="number" id="financial-risk" min="1" max="10" value="3">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateRiskMetrics()">Analyze Blockchain Risks</button>
+                    </div>
+                </div>
+
+                <div id="risk-output" class="tab-content">
+                    <div class="output-section">
+                        <div class="metric">
+                            <span class="metric-label">Overall Risk Score</span>
+                            <span class="metric-value" id="overall-risk-score">0/10</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Risk Category</span>
+                            <span class="metric-value" id="risk-category">Low</span>
+                        </div>
+                        <div id="risk-recommendations"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blockchain Six Sigma -->
+            <div class="card">
+                <div class="blockchain-indicator">BLOCKCHAIN SECURED</div>
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(45deg, #16a085, #1abc9c);">📊</div>
+                    <div class="card-title">Blockchain Six Sigma</div>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="switchTab('sigma', 'input')">Quality Input</div>
+                    <div class="tab" onclick="switchTab('sigma', 'output')">Sigma Level</div>
+                </div>
+
+                <div id="sigma-input" class="tab-content active">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <div class="input-field">
+                                <label>Total Units Produced</label>
+                                <input type="number" id="total-units" value="10000">
+                            </div>
+                            <div class="input-field">
+                                <label>Defective Units</label>
+                                <input type="number" id="defective-units" value="30">
+                            </div>
+                            <div class="input-field">
+                                <label>Process Opportunities</label>
+                                <input type="number" id="process-opportunities" value="5">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="calculateSixSigma()">Calculate Sigma Level</button>
+                    </div>
+                </div>
+
+                <div id="sigma-output" class="tab-content">
+                    <div class="output-section">
+                        <div class="metric">
+                            <span class="metric-label">Sigma Level</span>
+                            <span class="metric-value" id="sigma-level">0</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Defect Rate</span>
+                            <span class="metric-value" id="defect-rate">0%</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Quality Performance</span>
+                            <span class="metric-value" id="quality-performance">Calculating...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="secure-storage-indicator">
+        🔒 Secure Blockchain Storage Active
+    </div>
+
+    <script>
+        // Blockchain simulation and secure data storage
+        class BlockchainStorage {
+            constructor() {
+                this.blocks = JSON.parse(localStorage.getItem('scmBlockchain') || '[]');
+                this.currentIndex = this.blocks.length;
+            }
+
+            addBlock(data) {
+                const block = {
+                    index: this.currentIndex++,
+                    timestamp: new Date().toISOString(),
+                    data: data,
+                    hash: this.generateHash(JSON.stringify(data) + Date.now()),
+                    previousHash: this.blocks.length > 0 ? this.blocks[this.blocks.length - 1].hash : '0'
+                };
+                this.blocks.push(block);
+                localStorage.setItem('scmBlockchain', JSON.stringify(this.blocks));
+                return block;
+            }
+
+            generateHash(data) {
+                let hash = 0;
+                for (let i = 0; i < data.length; i++) {
+                    const char = data.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                return Math.abs(hash).toString(16);
+            }
+
+            getLatestBlock() {
+                return this.blocks[this.blocks.length - 1];
+            }
+
+            getAllBlocks() {
+                return this.blocks;
+            }
+        }
+
+        // Initialize blockchain storage
+        const blockchain = new BlockchainStorage();
+
+        // Global variables to store data
+        let suppliers = [];
+        let inventoryItems = [];
+        let demandData = [];
+
+        // Tab switching functionality
+        function switchTab(section, tabType) {
+            const inputTab = document.getElementById(`${section}-input`);
+            const outputTab = document.getElementById(`${section}-output`);
+            const tabElements = inputTab.parentElement.querySelectorAll('.tab');
+            
+            // Remove active class from all tabs and contents
+            tabElements.forEach(tab => tab.classList.remove('active'));
+            inputTab.classList.remove('active');
+            outputTab.classList.remove('active');
+            
+            // Show selected tab content
+            if (tabType === 'input') {
+                inputTab.classList.add('active');
+                tabElements[0].classList.add('active');
+            } else {
+                outputTab.classList.add('active');
+                tabElements[1].classList.add('active');
+            }
+        }
+
+        // Demand Forecasting Calculations
+        function calculateDemandForecast() {
+            try {
+                const historicalSalesStr = document.getElementById('historical-sales').value;
+                const seasonalFactor = parseFloat(document.getElementById('seasonal-factor').value) || 1.15;
+                const growthRate = parseFloat(document.getElementById('growth-rate').value) || 5.2;
+                
+                if (!historicalSalesStr.trim()) {
+                    alert('Please enter historical sales data');
+                    return;
+                }
+
+                const historicalSales = historicalSalesStr.split(',').map(val => parseFloat(val.trim())).filter(val => !isNaN(val));
+                
+                if (historicalSales.length === 0) {
+                    alert('Please enter valid numerical data separated by commas');
+                    return;
+                }
+
+                // Calculate forecast
+                const avgSales = historicalSales.reduce((sum, val) => sum + val, 0) / historicalSales.length;
+                const nextMonthDemand = Math.round(avgSales * seasonalFactor * (1 + growthRate / 100));
+                
+                // Calculate accuracy (simplified)
+                const variance = historicalSales.reduce((sum, val) => sum + Math.pow(val - avgSales, 2), 0) / historicalSales.length;
+                const standardDeviation = Math.sqrt(variance);
+                const coefficientOfVariation = (standardDeviation / avgSales) * 100;
+                const accuracy = Math.max(70, 100 - coefficientOfVariation).toFixed(1);
+                
+                const confidenceInterval = (standardDeviation / avgSales * 100).toFixed(1);
+
+                // Store in blockchain
+                blockchain.addBlock({
+                    type: 'demand_forecast',
+                    historicalSales: historicalSales,
+                    nextMonthDemand: nextMonthDemand,
+                    accuracy: accuracy,
+                    confidenceInterval: confidenceInterval
+                });
+
+                // Update output
+                document.getElementById('forecast-accuracy').textContent = accuracy + '%';
+                document.getElementById('next-month-demand').textContent = nextMonthDemand.toLocaleString() + ' units';
+                document.getElementById('confidence-interval').textContent = '±' + confidenceInterval + '%';
+                document.getElementById('blockchain-forecast-status').textContent = 'Forecast data secured on blockchain - Block #' + blockchain.getLatestBlock().index;
+
+                // Switch to output tab
+                switchTab('demand', 'output');
+            } catch (error) {
+                alert('Error calculating forecast: Please check your input data format. Use comma-separated numbers.');
+                console.error('Forecast calculation error:', error);
+            }
+        }
+
+        // VMI Calculations
+        function addInventoryItem() {
+            const name = document.getElementById('vmi-item-name').value.trim();
+            const currentStock = parseInt(document.getElementById('vmi-current-stock').value) || 0;
+            const maxStock = parseInt(document.getElementById('vmi-max-stock').value) || 0;
+            const minStock = parseInt(document.getElementById('vmi-min-stock').value) || 0;
+            const reorderPoint = parseInt(document.getElementById('vmi-reorder-point').value) || 0;
+            const leadTime = parseInt(document.getElementById('vmi-lead-time').value) || 0;
+
+            if (!name) {
+                alert('Please enter item name');
+                return;
+            }
+
+            const stockLevel = ((currentStock - minStock) / (maxStock - minStock)) * 100;
+            let status = 'good';
+            if (currentStock <= reorderPoint) status = 'warning';
+            if (currentStock <= minStock) status = 'critical';
+
+            const item = {
+                name,
+                currentStock,
+                maxStock,
+                minStock,
+                reorderPoint,
+                leadTime,
+                stockLevel: Math.max(0, Math.min(100, stockLevel)),
+                status
+            };
+
+            inventoryItems.push(item);
+
+            // Store in blockchain
+            blockchain.addBlock({
+                type: 'inventory_item',
+                item: item
+            });
+
+            document.getElementById('vmi-item-name').value = '';
+            alert(`Item "${name}" added to blockchain inventory successfully!`);
+        }
+
+        function calculateVMIMetrics() {
+            if (inventoryItems.length === 0) {
+                alert('Please add at least one inventory item first');
+                return;
+            }
+
+            // Calculate metrics
+            const totalItems = inventoryItems.length;
+            const wellStockedItems = inventoryItems.filter(item => item.status === 'good').length;
+            const vmiCoverage = ((wellStockedItems / totalItems) * 100).toFixed(1);
+            
+            const totalValue = inventoryItems.reduce((sum, item) => sum + (item.currentStock * 10), 0); // Assuming $10 per unit
+            const avgInventory = inventoryItems.reduce((sum, item) => sum + item.currentStock, 0) / totalItems;
+            const inventoryTurnover = (avgInventory > 0 ? (365 / avgInventory * 2) : 0).toFixed(1);
+            
+            const criticalItems = inventoryItems.filter(item => item.status === 'critical').length;
+            let stockoutRisk = 'Low';
+            if (criticalItems > totalItems * 0.3) stockoutRisk = 'High';
+            else if (criticalItems > totalItems * 0.1) stockoutRisk = 'Medium';
+
+            // Update output
+            document.getElementById('vmi-coverage').textContent = vmiCoverage + '%';
+            document.getElementById('inventory-turnover').textContent = inventoryTurnover + 'x';
+            document.getElementById('stockout-risk').textContent = stockoutRisk;
+
+            // Render inventory grid
+            renderInventoryGrid();
+
+            // Store in blockchain
+            blockchain.addBlock({
+                type: 'vmi_metrics',
+                vmiCoverage: vmiCoverage,
+                inventoryTurnover: inventoryTurnover,
+                stockoutRisk: stockoutRisk
+            });
+
+            switchTab('vmi', 'output');
+        }
+
+        function renderInventoryGrid() {
+            const grid = document.getElementById('inventory-grid');
+            grid.innerHTML = '';
+
+            inventoryItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = `inventory-item ${item.status}`;
+                div.innerHTML = `
+                    <h4>${item.name}</h4>
+                    <p>Stock: ${item.currentStock}/${item.maxStock}</p>
+                    <p>Level: ${item.stockLevel.toFixed(1)}%</p>
+                    <span class="status-badge status-${item.status}">${item.status.toUpperCase()}</span>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        // JIT Calculations
+        function calculateJITMetrics() {
+            const productionCapacity = parseFloat(document.getElementById('production-capacity').value) || 0;
+            const actualProduction = parseFloat(document.getElementById('actual-production').value) || 0;
+            const ontimeOrders = parseFloat(document.getElementById('ontime-orders').value) || 0;
+            const totalOrders = parseFloat(document.getElementById('total-orders').value) || 1;
+            const avgInventory = parseFloat(document.getElementById('avg-inventory').value) || 0;
+            const dailyDemand = parseFloat(document.getElementById('daily-demand').value) || 1;
+
+            if (productionCapacity === 0 || totalOrders === 0) {
+                alert('Please enter valid production and order data');
+                return;
+            }
+
+            // Calculate metrics
+            const ontimeDelivery = (ontimeOrders / totalOrders) * 100;
+            const productionEfficiency = (actualProduction / productionCapacity) * 100;
+            const inventoryDays = avgInventory / dailyDemand;
+
+            let jitPerformance = 'Poor';
+            let jitStatus = 'Production needs significant improvement';
+
+            if (ontimeDelivery >= 95 && productionEfficiency >= 95 && inventoryDays <= 3) {
+                jitPerformance = 'Excellent';
+                jitStatus = 'All production lines perfectly synchronized';
+            } else if (ontimeDelivery >= 90 && productionEfficiency >= 90 && inventoryDays <= 5) {
+                jitPerformance = 'Good';
+                jitStatus = 'Production lines well synchronized';
+            } else if (ontimeDelivery >= 80 && productionEfficiency >= 80) {
+                jitPerformance = 'Average';
+                jitStatus = 'Some production lines need adjustment';
+            }
+
+            // Store in blockchain
+            blockchain.addBlock({
+                type: 'jit_metrics',
+                ontimeDelivery: ontimeDelivery,
+                productionEfficiency: productionEfficiency,
+                inventoryDays: inventoryDays,
+                jitPerformance: jitPerformance
+            });
+
+            // Update output
+            document.getElementById('ontime-delivery').textContent = ontimeDelivery.toFixed(1) + '%';
+            document.getElementById('production-efficiency').textContent = productionEfficiency.toFixed(1) + '%';
+            document.getElementById('inventory-days').textContent = inventoryDays.toFixed(1) + ' days';
+            document.getElementById('jit-performance').textContent = jitPerformance;
+            document.getElementById('jit-status').textContent = jitStatus + ' - Block #' + blockchain.getLatestBlock().index;
+
+            switchTab('jit', 'output');
+        }
+
+        // TCO Calculations
+        function calculateTCO() {
+            const purchaseCost = parseFloat(document.getElementById('purchase-cost').value) || 0;
+            const operatingCost = parseFloat(document.getElementById('operating-cost').value) || 0;
+            const maintenanceCost = parseFloat(document.getElementById('maintenance-cost').value) || 0;
+            const trainingCost = parseFloat(document.getElementById('training-cost').value) || 0;
+            const disposalCost = parseFloat(document.getElementById('disposal-cost').value) || 0;
+            const lifespan = parseInt(document.getElementById('asset-lifespan').value) || 1;
+
+            if (lifespan === 0) {
+                alert('Asset lifespan must be greater than 0');
+                return;
+            }
+
+            const totalOperatingCosts = (operatingCost + maintenanceCost) * lifespan;
+            const totalTCO = purchaseCost + totalOperatingCosts + trainingCost + disposalCost;
+            const annualTCO = totalTCO / lifespan;
+            
+            // Calculate hidden costs percentage
+            const visibleCosts = purchaseCost + operatingCost * lifespan;
+            const hiddenCosts = totalTCO - visibleCosts;
+            const hiddenCostsPercent = (hiddenCosts / totalTCO) * 100;
+
+            // Store in blockchain
+            blockchain.addBlock({
+                type: 'tco_analysis',
+                totalTCO: totalTCO,
+                annualTCO: annualTCO,
+                hiddenCostsPercent: hiddenCostsPercent
+            });
+
+            // Update output
+            document.getElementById('total-tco').textContent = '$' + totalTCO.toLocaleString();
+            document.getElementById('annual-tco').textContent = '$' + annualTCO.toLocaleString();
+            document.getElementById('hidden-costs').textContent = hiddenCostsPercent.toFixed(1) + '%';
+            document.getElementById('tco-blockchain-status').textContent = 'TCO data immutably stored - Block #' + blockchain.getLatestBlock().index;
+
+            switchTab('tco', 'output');
+        }
+
+        // Risk Management Calculations
+        function calculateRiskMetrics() {
+            const supplyRisk = parseFloat(document.getElementById('supply-risk').value) || 0;
+            const demandRisk = parseFloat(document.getElementById('demand-risk').value) || 0;
+            const qualityRisk = parseFloat(document.getElementById('quality-risk').value) || 0;
+            const financialRisk = parseFloat(document.getElementById('financial-risk').value) || 0;
+
+            const overallRisk = (supplyRisk + demandRisk + qualityRisk + financialRisk) / 4;
+            
+            let riskCategory = 'Low';
+            if (overallRisk >= 7) riskCategory = 'High';
+            else if (overallRisk >= 4) riskCategory = 'Medium';
+
+            // Store in blockchain
+            blockchain.addBlock({
+                type: 'risk_assessment',
+                overallRisk: overallRisk,
+                riskCategory: riskCategory
+            });
+
+            document.getElementById('overall-risk-score').textContent = overallRisk.toFixed(1) + '/10';
+            document.getElementById('risk-category').textContent = riskCategory;
+
+            switchTab('risk', 'output');
+        }
+
+        // Six Sigma Calculations
+        function calculateSixSigma() {
+            const totalUnits = parseFloat(document.getElementById('total-units').value) || 0;
+            const defectiveUnits = parseFloat(document.getElementById('defective-units').value) || 0;
+            const opportunities = parseFloat(document.getElementById('process-opportunities').value) || 1;
+
+            if (totalUnits === 0) {
+                alert('Total units must be greater than 0');
+                return;
+            }
+
+            const defectRate = (defectiveUnits / totalUnits) * 100;
+            const dpo = defectiveUnits / (totalUnits * opportunities);
+            const dpmo = dpo * 1000000;
+
+            let sigmaLevel = 6;
+            if (dpmo > 66807) sigmaLevel = 3;
+            else if (dpmo > 6210) sigmaLevel = 4;
+            else if (dpmo > 233) sigmaLevel = 5;
+
+            let qualityPerformance = 'Excellent';
+            if (sigmaLevel < 4) qualityPerformance = 'Poor';
+            else if (sigmaLevel < 5) qualityPerformance = 'Good';
+
+            // Store in blockchain
+            blockchain.addBlock({
+                type: 'six_sigma',
+                sigmaLevel: sigmaLevel,
+                defectRate: defectRate,
+                qualityPerformance: qualityPerformance
+            });
+
+            document.getElementById('sigma-level').textContent = sigmaLevel.toFixed(1);
+            document.getElementById('defect-rate').textContent = defectRate.toFixed(3) + '%';
+            document.getElementById('quality-performance').textContent = qualityPerformance;
+
+            switchTab('sigma', 'output');
+        }
+
+        // Initialize dashboard with sample data
+        function initializeDashboard() {
+            // Add sample inventory items
+            inventoryItems = [
+                {
+                    name: 'Raw Materials',
+                    currentStock: 170,
+                    maxStock: 200,
+                    minStock: 20,
+                    reorderPoint: 50,
+                    leadTime: 5,
+                    stockLevel: 85,
+                    status: 'good'
+                }
+            ];
+
+            renderInventoryGrid();
+            
+            // Initialize blockchain with genesis block if empty
+            if (blockchain.getAllBlocks().length === 0) {
+                blockchain.addBlock({
+                    type: 'genesis',
+                    message: 'Supply Chain Management Blockchain Initialized'
+                });
+            }
+        }
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDashboard();
+        });
+    </script>
+</body>
+</html>
