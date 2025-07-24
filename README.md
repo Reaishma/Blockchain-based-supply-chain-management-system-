@@ -27,6 +27,7 @@ A comprehensive supply chain management system built with blockchain technology 
 - **Ordering Service** - Transaction ordering and block creation
 - **Certificate Authority** - Identity and access management
 
+
 ## 🚀 Features
 
 ### Core Supply Chain Modules
@@ -38,6 +39,7 @@ A comprehensive supply chain management system built with blockchain technology 
 - **💰 Total Cost of Ownership** - Comprehensive cost analysis
 - **📦 Vendor Managed Inventory** - Automated inventory management
 - **⚡ Just in Time Production** - Optimized production scheduling
+- **Real-time Monitoring**: Monitor supply chain data in real-time, with blockchain-secured storage
 
 ### Blockchain Security Features
 - **Immutable Data Storage** - All transactions recorded on blockchain
@@ -45,6 +47,8 @@ A comprehensive supply chain management system built with blockchain technology 
 - **Access Control** - Role-based permissions via Hyperledger Fabric
 - **Audit Trail** - Complete transaction history
 - **Smart Contracts** - Automated business rule enforcement
+- **Blockchain-based Data Integrity**: Ensure data integrity and transparency through blockchain technology
+- **Secure Data Storage**: Store data securely on the blockchain, with access controls and encryption
 
 ## 🛠️ Technology Stack
 
