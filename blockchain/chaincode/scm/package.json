@@ -1,0 +1,42 @@
+
+{
+    "name": "scm-chaincode",
+    "version": "1.0.0",
+    "description": "Supply Chain Management Chaincode for Hyperledger Fabric",
+    "main": "index.js",
+    "engines": {
+        "node": ">=12",
+        "npm": ">=5"
+    },
+    "scripts": {
+        "start": "fabric-chaincode-node start",
+        "test": "nyc mocha test --recursive"
+    },
+    "dependencies": {
+        "fabric-contract-api": "^2.4.0",
+        "fabric-shim": "^2.4.0"
+    },
+    "devDependencies": {
+        "chai": "^4.3.0",
+        "mocha": "^8.4.0",
+        "nyc": "^15.1.0",
+        "sinon": "^11.1.0",
+        "sinon-chai": "^3.7.0"
+    },
+    "nyc": {
+        "exclude": [
+            "coverage/**",
+            "test/**"
+        ],
+        "reporter": [
+            "text-summary",
+            "html"
+        ],
+        "all": true,
+        "check-coverage": true,
+        "statements": 80,
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+    }
+}
