@@ -3,8 +3,11 @@
 
 A comprehensive supply chain management system built with blockchain technology for secure, transparent, and immutable data storage. This project combines a modern Angular frontend with a Ruby on Rails backend, all secured by Hyperledger Fabric blockchain platform.
 
+
+![Overview](https://github.com/Reaishma/Blockchain-based-supply-chain-management-system-/blob/main/chrome_screenshot_Sep%206%2C%202025%2011_10_33%20AM%20GMT%2B05_30.png)
+
 # 🚀 Live Demo 
-View live demo https://reaishma.github.io/Blockchain-based-supply-chain-management-system-/
+**View live demo** https://reaishma.github.io/Blockchain-based-supply-chain-management-system-/
 
 
 ## 🏗️ Architecture
