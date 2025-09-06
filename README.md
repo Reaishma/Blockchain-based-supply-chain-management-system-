@@ -40,6 +40,9 @@ A comprehensive supply chain management system built with blockchain technology 
 - **🏭 Blockchain Lean Management** - Process optimization tracking
 - **🤝 Supply Relationship Management** - Vendor performance monitoring
 - **💰 Total Cost of Ownership** - Comprehensive cost analysis
+
+![TCO](https://github.com/Reaishma/Blockchain-based-supply-chain-management-system-/blob/main/chrome_screenshot_Sep%206%2C%202025%2011_11_09%20AM%20GMT%2B05_30.png)
+
 - **📦 Vendor Managed Inventory** - Automated inventory management
 - **⚡ Just in Time Production** - Optimized production scheduling
 - **Real-time Monitoring**: Monitor supply chain data in real-time, with blockchain-secured storage
@@ -174,9 +177,8 @@ ng e2e
 - **Smart Contract Validation** - Automated business rule enforcement
 - **Immutable Audit Logs** - Complete transaction history on blockchain
 
-## 🌐 Deployment on Replit
+## 🌐 Deployment
 
-This project is optimized for deployment on Replit platform:
 
 1. **Frontend**: Served via Angular development server
 2. **Backend**: Rails API with PostgreSQL database
@@ -228,5 +230,3 @@ For support and questions:
 
 
 
-
-https://reaishma.github.io/Blockchain-based-supply-chain-management-system-/
