@@ -11,7 +11,7 @@ A comprehensive supply chain management system built with blockchain technology 
 
 ## 🧑‍💻 Developer 
 
-**Reaishma** 
+**Reaishma**[GitHub](https://github.com/Reaishma)
 
 ## 🏗️ Architecture
 
