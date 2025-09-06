@@ -9,6 +9,9 @@ A comprehensive supply chain management system built with blockchain technology 
 # 🚀 Live Demo 
 **View live demo** https://reaishma.github.io/Blockchain-based-supply-chain-management-system-/
 
+## 🧑‍💻 Developer 
+
+**Reaishma** 
 
 ## 🏗️ Architecture
 
@@ -48,6 +51,9 @@ A comprehensive supply chain management system built with blockchain technology 
 - **Real-time Monitoring**: Monitor supply chain data in real-time, with blockchain-secured storage
 
 ### Blockchain Security Features
+
+![Risk management](https://github.com/Reaishma/Blockchain-based-supply-chain-management-system-/blob/main/chrome_screenshot_Sep%206%2C%202025%2011_11_53%20AM%20GMT%2B05_30.png)
+
 - **Immutable Data Storage** - All transactions recorded on blockchain
 - **Digital Signatures** - Cryptographic verification of all operations
 - **Access Control** - Role-based permissions via Hyperledger Fabric
@@ -209,8 +215,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 For support and questions:
 - Create an issue in the repository
-- Contact the development team
-- Check the documentation in `/docs` folder
+- Contact the developer
+
 
 ## 🔮 Roadmap
 
